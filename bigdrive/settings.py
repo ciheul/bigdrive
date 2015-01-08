@@ -40,7 +40,6 @@ INSTALLED_APPS = (
     'rest_framework',
     'augen',
     'bigauth',
-    'snippets',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -4,3 +4,7 @@ tornado-redis
 redis
 django
 yolk
+djangorestframework
+django-filter
+markdown
+gunicorn
