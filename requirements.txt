@@ -1,0 +1,6 @@
+psycopg2==2.5.4
+tornado
+tornado-redis
+redis
+django
+yolk
