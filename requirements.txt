@@ -8,3 +8,7 @@ djangorestframework
 django-filter
 markdown
 gunicorn
+pika
+tweepy
+simplejson
+futures
