@@ -40,11 +40,11 @@ class TrackerView(View):
             return HttpResponse('FAIL')
 
         # device ID must be a number, though it has a string type
-        try:
-            int(request.GET['deviceID'])
-        except:
-            print "deviceID is not number"
-            return HttpResponse('FAIL')
+        #try:
+        #    int(request.GET['deviceID'])
+        #except:
+        #    print "deviceID is not number"
+        #    return HttpResponse('FAIL')
 
         device_id = request.GET['deviceID']
         lat = float(request.GET['latitude'])
