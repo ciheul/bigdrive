@@ -1,5 +1,6 @@
 import os.path
 
+from django.db import IntegrityError
 from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render
@@ -63,6 +64,7 @@ class TrackerView(View):
                         speed=speed)
             t.save()
         except IntegrityError:
+            print "FAIL: saving to database"
             return HttpResponse('FAIL')
 
         message = { 'type': 'point', 'lon': lon, 'lat': lat }
