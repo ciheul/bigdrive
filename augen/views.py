@@ -100,17 +100,16 @@ class TrackerPushView(View):
         if 'deviceID' not in request.GET \
                 or 'longitude' not in request.GET \
                 or 'latitude' not in request.GET:
-            print "FAIL: all"
-            return HttpResponse('FAIL')
+            print "FAIL: mandatory parameters are incorrect"
+            return HttpResponse('FAIL: mandatory parameters are incorrect')
 
-        # device ID must be a number, though it has a string type
-        #try:
-        #    int(request.GET['deviceID'])
-        #except:
-        #    print "deviceID is not number"
-        #    return HttpResponse('FAIL')
+        try:
+            device = Device.objects.get(name=request.GET['deviceID'])
+        except Device.DoesNotExist:
+            print "FAIL: device is not registered"
+            return HttpResponse('FAIL: device %s is not registered' % 
+                                request.GET['deviceID'])
 
-        device_id = request.GET['deviceID']
         lat = float(request.GET['latitude'])
         lon = float(request.GET['longitude'])
         alt = float(request.GET['altitude'])
@@ -123,12 +122,12 @@ class TrackerPushView(View):
 
         # save to database
         try:
-            t = Tracker(device_id=device_id, lon=lon, lat=lat, alt=alt,
+            t = Tracker(device=device, lon=lon, lat=lat, alt=alt,
                         speed=speed)
             t.save()
         except IntegrityError:
             print "FAIL: saving to database"
-            return HttpResponse('FAIL')
+            return HttpResponse('FAIL: saving to database')
 
         message = { 'type': 'point', 'lon': lon, 'lat': lat }
         self.pc.publish_message(json.dumps(message))

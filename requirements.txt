@@ -1,3 +1,4 @@
+python-dateutil
 psycopg2==2.5.4
 tornado
 tornado-redis
