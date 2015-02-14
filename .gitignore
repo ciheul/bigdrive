@@ -3,3 +3,4 @@
 bigdrive/config.py
 static/admin/
 static/rest_framework
+dumpdata/

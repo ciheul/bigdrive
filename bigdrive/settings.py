@@ -94,3 +94,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, '..', 'bigdrive-angular'),
 )
+
+#REST_FRAMEWORK = {
+#    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend')
+#}
