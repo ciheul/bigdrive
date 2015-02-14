@@ -49,17 +49,35 @@ class TrackerList(generics.ListCreateAPIView):
 
         ts = Tracker.objects.filter(query).order_by('-date_created')
 
-        if int(self.request.QUERY_PARAMS.get('aggregate', FALSE)) == TRUE:
+        if int(self.request.QUERY_PARAMS.get('aggregate', FALSE)) == TRUE \
+                and len(ts) > 0:
             return self.aggregate_points(ts)
 
         return ts
 
     def aggregate_points(self, ts):
         aggr = list()
-        prev = ts[0]
+
+        # find first valid coordinate
+        for i, t in enumerate(ts):
+            if ts[i].lat < -90 or ts[i].lat > 90 \
+                    or ts[i].lon < -180 or ts[i].lon > 180:
+                continue
+            prev = ts[i]
+            start = i
+            break
+
+        #prev = ts[0]
+        #print prev.lat, prev.lon
         total = 1
         for i, t in enumerate(ts):
-            if i == 0: continue
+            if i in range(start): continue
+
+            # invalid lon lat
+            if ts[i].lat < -90 or ts[i].lat > 90 \
+                    or ts[i].lon < -180 or ts[i].lon > 180:
+                continue
+            #print "lat: %f, lon: %f" % (ts[i].lat, ts[i].lon)
 
             # compare with previous element in list
             if ts[i].lat != prev.lat and ts[i] != prev.lon \
